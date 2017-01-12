@@ -33,39 +33,67 @@ var WDynamoDB = function () {
   _createClass(WDynamoDB, [{
     key: 'get',
     value: function get(params, callback) {
-      this.docClient.get(params, function (error, data) {
-        callback(error, data);
+      var _this = this;
+
+      return new Promise(function (resolve, reject) {
+        _this.docClient.get(params, function (error, data) {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(data);
+          }
+        });
       });
     }
   }, {
     key: 'put',
-    value: function put(params, callback) {
-      var uuid = _shortid2.default.generate();
-      var now = new Date();
-      params.Item.id = uuid;
-      params.Item.createdAt = now.toISOString();
-      params.Item.updatedAt = now.toISOString();
-      this.docClient.put(params, function (error, data) {
-        if (error) {
-          callback(error);
-        } else {
-          data.id = uuid;
-          callback(null, data);
-        }
+    value: function put(params) {
+      var _this2 = this;
+
+      return new Promise(function (resolve, reject) {
+        var uuid = _shortid2.default.generate();
+        var now = new Date();
+        params.Item.id = uuid;
+        params.Item.createdAt = now.toISOString();
+        params.Item.updatedAt = now.toISOString();
+        _this2.docClient.put(params, function (error, data) {
+          if (error) {
+            reject(error);
+          } else {
+            data.id = uuid;
+            resolve(data);
+          }
+        });
       });
     }
   }, {
     key: 'scan',
-    value: function scan(params, callback) {
-      this.docClient.scan(params, function (error, data) {
-        callback(error, data);
+    value: function scan(params) {
+      var _this3 = this;
+
+      return new Promise(function (resolve, reject) {
+        _this3.docClient.scan(params, function (error, data) {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(data);
+          }
+        });
       });
     }
   }, {
     key: 'remove',
     value: function remove(params, callback) {
-      this.docClient.delete(params, function (error, data) {
-        callback(error, data);
+      var _this4 = this;
+
+      return new Promise(function (resolve, reject) {
+        _this4.docClient.delete(params, function (error, data) {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(data);
+          }
+        });
       });
     }
   }]);
