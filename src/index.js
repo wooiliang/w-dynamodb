@@ -11,9 +11,21 @@ export default class WDynamoDB {
     this.docClient = new AWS.DynamoDB.DocumentClient();
   }
 
-  get(params, callback) {
+  get(params) {
     return new Promise((resolve, reject) => {
       this.docClient.get(params, (error, data) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(data);
+        }
+      });
+    });
+  }
+
+  batchGet(params) {
+    return new Promise((resolve, reject) => {
+      this.docClient.batchGet(params, (error, data) => {
         if (error) {
           reject(error);
         } else {
@@ -53,7 +65,7 @@ export default class WDynamoDB {
     });
   }
 
-  remove(params, callback) {
+  remove(params) {
     return new Promise((resolve, reject) => {
       this.docClient.delete(params, (error, data) => {
         if (error) {

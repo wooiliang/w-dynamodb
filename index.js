@@ -32,7 +32,7 @@ var WDynamoDB = function () {
 
   _createClass(WDynamoDB, [{
     key: 'get',
-    value: function get(params, callback) {
+    value: function get(params) {
       var _this = this;
 
       return new Promise(function (resolve, reject) {
@@ -46,9 +46,24 @@ var WDynamoDB = function () {
       });
     }
   }, {
+    key: 'batchGet',
+    value: function batchGet(params) {
+      var _this2 = this;
+
+      return new Promise(function (resolve, reject) {
+        _this2.docClient.batchGet(params, function (error, data) {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+    }
+  }, {
     key: 'put',
     value: function put(params) {
-      var _this2 = this;
+      var _this3 = this;
 
       return new Promise(function (resolve, reject) {
         var uuid = _shortid2.default.generate();
@@ -56,7 +71,7 @@ var WDynamoDB = function () {
         params.Item.id = uuid;
         params.Item.createdAt = now.toISOString();
         params.Item.updatedAt = now.toISOString();
-        _this2.docClient.put(params, function (error, data) {
+        _this3.docClient.put(params, function (error, data) {
           if (error) {
             reject(error);
           } else {
@@ -69,10 +84,10 @@ var WDynamoDB = function () {
   }, {
     key: 'scan',
     value: function scan(params) {
-      var _this3 = this;
+      var _this4 = this;
 
       return new Promise(function (resolve, reject) {
-        _this3.docClient.scan(params, function (error, data) {
+        _this4.docClient.scan(params, function (error, data) {
           if (error) {
             reject(error);
           } else {
@@ -83,11 +98,11 @@ var WDynamoDB = function () {
     }
   }, {
     key: 'remove',
-    value: function remove(params, callback) {
-      var _this4 = this;
+    value: function remove(params) {
+      var _this5 = this;
 
       return new Promise(function (resolve, reject) {
-        _this4.docClient.delete(params, function (error, data) {
+        _this5.docClient.delete(params, function (error, data) {
           if (error) {
             reject(error);
           } else {
