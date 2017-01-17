@@ -53,6 +53,18 @@ export default class WDynamoDB {
     });
   }
 
+  update(params) {
+    return new Promise((resolve, reject) => {
+      this.docClient.update(params, (error, data) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(data);
+        }
+      });
+    });
+  }
+
   scan(params) {
     return new Promise((resolve, reject) => {
       this.docClient.scan(params, (error, data) => {

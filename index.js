@@ -82,12 +82,27 @@ var WDynamoDB = function () {
       });
     }
   }, {
-    key: 'scan',
-    value: function scan(params) {
+    key: 'update',
+    value: function update(params) {
       var _this4 = this;
 
       return new Promise(function (resolve, reject) {
-        _this4.docClient.scan(params, function (error, data) {
+        _this4.docClient.update(params, function (error, data) {
+          if (error) {
+            reject(error);
+          } else {
+            resolve(data);
+          }
+        });
+      });
+    }
+  }, {
+    key: 'scan',
+    value: function scan(params) {
+      var _this5 = this;
+
+      return new Promise(function (resolve, reject) {
+        _this5.docClient.scan(params, function (error, data) {
           if (error) {
             reject(error);
           } else {
@@ -99,10 +114,10 @@ var WDynamoDB = function () {
   }, {
     key: 'remove',
     value: function remove(params) {
-      var _this5 = this;
+      var _this6 = this;
 
       return new Promise(function (resolve, reject) {
-        _this5.docClient.delete(params, function (error, data) {
+        _this6.docClient.delete(params, function (error, data) {
           if (error) {
             reject(error);
           } else {
