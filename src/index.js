@@ -39,8 +39,10 @@ export default class WDynamoDB {
     return new Promise((resolve, reject) => {
       const uuid = shortid.generate();
       const now = new Date();
-      params.Item.id = uuid;
-      params.Item.createdAt = now.toISOString();
+      if (!params.Item.id) {
+        params.Item.id = uuid;
+        params.Item.createdAt = now.toISOString();
+      }
       params.Item.updatedAt = now.toISOString();
       this.docClient.put(params, (error, data) => {
         if (error) {

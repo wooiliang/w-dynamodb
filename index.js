@@ -68,8 +68,10 @@ var WDynamoDB = function () {
       return new Promise(function (resolve, reject) {
         var uuid = _shortid2.default.generate();
         var now = new Date();
-        params.Item.id = uuid;
-        params.Item.createdAt = now.toISOString();
+        if (!params.Item.id) {
+          params.Item.id = uuid;
+          params.Item.createdAt = now.toISOString();
+        }
         params.Item.updatedAt = now.toISOString();
         _this3.docClient.put(params, function (error, data) {
           if (error) {
